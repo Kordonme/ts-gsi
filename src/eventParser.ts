@@ -1,15 +1,19 @@
 import { DataModel } from "./models/dataModel"
 import { Map } from "./models/map"
 import { MapTeam } from "./models/mapTeam"
+import { Player } from "./models/player"
+import { PlayerState } from "./models/playerState"
 import { Provider } from "./models/provider"
 
 class EventParser {
   public parse(json: any): object {
     const map: Map = this.parseMap(json.map)
+    const player: Player = this.parsePlayer(json.player)
     const provider: Provider = this.parseProvider(json.provider)
 
     const dataModel: DataModel = {
       map,
+      player,
       provider,
     }
 
@@ -54,6 +58,34 @@ class EventParser {
       name: team.name,
       score: team.score,
       timeoutsRemaining: team.timeouts_remaining
+    }
+  }
+
+  private parsePlayer (player: any): Player {
+    if (!player) {
+      return null
+    }
+
+    const playerState: PlayerState = {
+      armor: player.state.armor,
+      burning: player.state.burning,
+      equipmentValue: player.state.equip_value,
+      flashed: player.state.flashed,
+      health: player.state.health,
+      helmet: player.state.helmet,
+      money: player.state.money,
+      roundKills: player.state.round_kills,
+      roundKillsWithHeadshot: player.state.round_killhs,
+      smoked: player.state.smoked
+    }
+
+    return {
+      activity: player.activity,
+      name: player.name,
+      observerSlot: player.observerSlot,
+      state: playerState,
+      steamId: player.steamid,
+      team: player.team
     }
   }
 }
