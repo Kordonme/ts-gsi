@@ -6,7 +6,8 @@
     ],
     "jsRules": {},
     "rules": {
-        "semicolon": [true, "never"]
+        "semicolon": [true, "never"],
+        "space-before-function-paren": true
     },
     "rulesDirectory": []
 }

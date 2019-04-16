@@ -7,7 +7,7 @@ import { Provider } from "./models/provider"
 import { Round } from "./models/round"
 
 class EventParser {
-  public parse(json: any): object {
+  public parse (json: any): object {
     const map: Map = this.parseMap(json.map)
     const player: Player = this.parsePlayer(json.player)
     const provider: Provider = this.parseProvider(json.provider)
@@ -104,7 +104,7 @@ class EventParser {
     }
   }
 
-  private parseRound(round: any): Round {
+  private parseRound (round: any): Round {
     if (!round) {
       return null
     }
