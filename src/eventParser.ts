@@ -4,17 +4,20 @@ import { MapTeam } from "./models/mapTeam"
 import { Player } from "./models/player"
 import { PlayerState } from "./models/playerState"
 import { Provider } from "./models/provider"
+import { Round } from "./models/round"
 
 class EventParser {
   public parse(json: any): object {
     const map: Map = this.parseMap(json.map)
     const player: Player = this.parsePlayer(json.player)
     const provider: Provider = this.parseProvider(json.provider)
+    const round: Round = this.parseRound(json.round)
 
     const dataModel: DataModel = {
       map,
       player,
       provider,
+      round
     }
 
     return dataModel
@@ -86,6 +89,18 @@ class EventParser {
       state: playerState,
       steamId: player.steamid,
       team: player.team
+    }
+  }
+
+  private parseRound(round: any): Round {
+    if (!round) {
+      return null
+    }
+
+    return {
+      bomb: round.bomb,
+      phase: round.phase,
+      winningTeam: round.win_team
     }
   }
 }
