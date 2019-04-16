@@ -2,6 +2,7 @@ import { DataModel } from "./models/dataModel"
 import { Map } from "./models/map"
 import { MapTeam } from "./models/mapTeam"
 import { Player } from "./models/player"
+import { PlayerMatchStats } from "./models/playerMatchStats"
 import { PlayerState } from "./models/playerState"
 import { Provider } from "./models/provider"
 import { Round } from "./models/round"
@@ -74,9 +75,11 @@ class EventParser {
     }
 
     const playerState: PlayerState = this.parsePlayerState(player.state)
+    const playerMatchStats: PlayerMatchStats = this.parsePlayerMatchStats(player.match_stats)
 
     return {
       activity: player.activity,
+      matchStats: playerMatchStats,
       name: player.name,
       observerSlot: player.observerSlot,
       state: playerState,
@@ -113,6 +116,20 @@ class EventParser {
       bomb: round.bomb,
       phase: round.phase,
       winningTeam: round.win_team
+    }
+  }
+
+  private parsePlayerMatchStats (playerMatchStats: any): PlayerMatchStats {
+    if (!playerMatchStats) {
+      return null
+    }
+
+    return {
+      assists: playerMatchStats.assits,
+      deaths: playerMatchStats.deaths,
+      kills: playerMatchStats.kills,
+      mvps: playerMatchStats.mvps,
+      score: playerMatchStats.score
     }
   }
 }
