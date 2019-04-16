@@ -73,18 +73,7 @@ class EventParser {
       return null
     }
 
-    const playerState: PlayerState = {
-      armor: player.state.armor,
-      burning: player.state.burning,
-      equipmentValue: player.state.equip_value,
-      flashed: player.state.flashed,
-      health: player.state.health,
-      helmet: player.state.helmet,
-      money: player.state.money,
-      roundKills: player.state.round_kills,
-      roundKillsWithHeadshot: player.state.round_killhs,
-      smoked: player.state.smoked
-    }
+    const playerState: PlayerState = this.parsePlayerState(player.state)
 
     return {
       activity: player.activity,
@@ -93,6 +82,25 @@ class EventParser {
       state: playerState,
       steamId: player.steamid,
       team: player.team
+    }
+  }
+
+  private parsePlayerState (playerState: any): PlayerState {
+    if (!playerState) {
+      return null
+    }
+
+    return {
+      armor: playerState.armor,
+      burning: playerState.burning,
+      equipmentValue: playerState.equip_value,
+      flashed: playerState.flashed,
+      health: playerState.health,
+      helmet: playerState.helmet,
+      money: playerState.money,
+      roundKills: playerState.round_kills,
+      roundKillsWithHeadshot: playerState.round_killhs,
+      smoked: playerState.smoked
     }
   }
 
