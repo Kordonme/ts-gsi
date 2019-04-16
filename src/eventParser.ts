@@ -42,9 +42,13 @@ class EventParser {
     const mapTeamT: MapTeam = this.parseTeam(map.team_t)
 
     return {
+      currentSpectators: map.current_spectators,
+      mode: map.mode,
       name: map.name,
+      numberOfMatchesToWinSeries: map.num_matches_to_win_series,
       phase: map.phase,
       round: map.round,
+      souvenirsTotal: map.souvenirs_total,
       teamCT: mapTeamCT,
       teamT: mapTeamT
     }
