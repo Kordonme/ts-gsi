@@ -1,5 +1,6 @@
 import { PlayerMatchStats } from "./playerMatchStats"
 import { PlayerState } from "./playerState"
+import { PlayerWeapon } from "./playerWeapon"
 
 export class Player {
   public readonly activity: string
@@ -9,4 +10,5 @@ export class Player {
   public readonly observerSlot: number
   public readonly state: PlayerState
   public readonly team: string
+  public readonly weapons: PlayerWeapon[]
 }

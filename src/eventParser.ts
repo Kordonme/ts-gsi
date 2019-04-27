@@ -4,6 +4,7 @@ import { MapTeam } from "./models/mapTeam"
 import { Player } from "./models/player"
 import { PlayerMatchStats } from "./models/playerMatchStats"
 import { PlayerState } from "./models/playerState"
+import { PlayerWeapon } from "./models/playerWeapon"
 import { Provider } from "./models/provider"
 import { Round } from "./models/round"
 
@@ -76,6 +77,7 @@ class EventParser {
 
     const playerState: PlayerState = this.parsePlayerState(player.state)
     const playerMatchStats: PlayerMatchStats = this.parsePlayerMatchStats(player.match_stats)
+    const playerWeapons: PlayerWeapon[] = this.parsePlayerWeapons(player.weapons)
 
     return {
       activity: player.activity,
@@ -84,7 +86,8 @@ class EventParser {
       observerSlot: player.observerSlot,
       state: playerState,
       steamId: player.steamid,
-      team: player.team
+      team: player.team,
+      weapons: playerWeapons
     }
   }
 
@@ -131,6 +134,29 @@ class EventParser {
       mvps: playerMatchStats.mvps,
       score: playerMatchStats.score
     }
+  }
+
+  private parsePlayerWeapons (weapons: any): PlayerWeapon[] {
+    if (!weapons || weapons.length === 0) {
+      return []
+    }
+
+    const weaponsList: PlayerWeapon[] = []
+
+    Object.keys(weapons).forEach(key => {
+      const weapon = weapons[key]
+
+      weaponsList.push({
+        ammoClip: weapon.ammo_clip,
+        ammoClipMax: weapon.ammo_clip_max,
+        ammoReserve: weapon.ammo_reserve,
+        name: weapon.name,
+        state: weapon.state,
+        type: weapon.type
+      })
+
+      return weaponsList
+    })
   }
 }
 
