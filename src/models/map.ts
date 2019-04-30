@@ -1,3 +1,4 @@
+import { MapRound } from './mapRound'
 import { MapTeam } from './mapTeam'
 
 export class Map {
@@ -10,4 +11,5 @@ export class Map {
   public readonly souvenirsTotal: number
   public readonly teamCT: MapTeam
   public readonly teamT: MapTeam
+  public readonly rounds: MapRound[]
 }

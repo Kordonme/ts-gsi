@@ -1,5 +1,6 @@
 import { DataModel } from "./models/dataModel"
 import { Map } from "./models/map"
+import { MapRound } from "./models/mapRound"
 import { MapTeam } from "./models/mapTeam"
 import { Player } from "./models/player"
 import { PlayerMatchStats } from "./models/playerMatchStats"
@@ -42,6 +43,7 @@ class EventParser {
 
     const mapTeamCT: MapTeam = this.parseTeam(map.team_ct)
     const mapTeamT: MapTeam = this.parseTeam(map.team_t)
+    const mapRounds: MapRound[] = this.parseMapRounds(map.round_wins)
 
     return {
       currentSpectators: map.current_spectators,
@@ -50,10 +52,30 @@ class EventParser {
       numberOfMatchesToWinSeries: map.num_matches_to_win_series,
       phase: map.phase,
       round: map.round,
+      rounds: mapRounds,
       souvenirsTotal: map.souvenirs_total,
       teamCT: mapTeamCT,
       teamT: mapTeamT
     }
+  }
+
+  private parseMapRounds (rounds: any): MapRound[] {
+    if (!rounds || rounds.length === 0) {
+      return []
+    }
+
+    const mapRounds: MapRound[] = []
+
+    Object.keys(rounds).forEach(key => {
+      const result: string = rounds[key]
+
+      mapRounds.push({
+        result,
+        round: Number(key)
+      })
+    })
+
+    return mapRounds
   }
 
   private parseTeam (team: any): MapTeam {
