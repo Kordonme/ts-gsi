@@ -176,9 +176,9 @@ class EventParser {
         state: weapon.state,
         type: weapon.type
       })
-
-      return weaponsList
     })
+
+    return weaponsList
   }
 }
 
